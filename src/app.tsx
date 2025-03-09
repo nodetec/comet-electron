@@ -1,4 +1,14 @@
-import { createRoot } from 'react-dom/client';
+import React from "react";
 
-const root = createRoot(document.body);
-root.render(<h2>Hello from React!</h2>);
+import ReactDOM from "react-dom/client";
+
+const rootElement = document.getElementById("root");
+if (rootElement) {
+  ReactDOM.createRoot(rootElement).render(
+    <React.StrictMode>
+      <div>
+        <h1>💖 Hello from React!</h1>
+      </div>
+    </React.StrictMode>
+  );
+}
