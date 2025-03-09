@@ -20,6 +20,7 @@ const createWindow = (): void => {
     minHeight: 250,
     trafficLightPosition: { x: 18, y: 18 },
     titleBarStyle: "hidden",
+    backgroundColor: "#1D1E20",
     ...(process.platform !== "darwin" ? { titleBarOverlay: true } : {}),
     titleBarOverlay: {
       color: "#2f3241",

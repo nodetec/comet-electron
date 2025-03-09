@@ -6,11 +6,11 @@
 
 :root {
   --background: oklch(23.48% 0.004 264.49);
-  --foreground: oklch(89.14% 0.000 0);
+  --foreground: oklch(89.14% 0 0);
   --card: oklch(23.48% 0.004 264.49);
-  --card-foreground: oklch(89.14% 0.000 0);
+  --card-foreground: oklch(89.14% 0 0);
   --popover: oklch(23.48% 0.004 264.49);
-  --popover-foreground: oklch(89.14% 0.000 0);
+  --popover-foreground: oklch(89.14% 0 0);
   --primary: oklch(0.985 0 0);
   --primary-foreground: oklch(0.205 0 0);
   --secondary: oklch(0.269 0 0);
@@ -21,7 +21,7 @@
   --accent-foreground: oklch(0.985 0 0);
   --destructive: oklch(0.396 0.141 25.723);
   --destructive-foreground: oklch(0.637 0.237 25.331);
-  --border: oklch(0.269 0 0);
+  --border: oklch(14.48% 0 0);
   --input: oklch(0.269 0 0);
   --ring: oklch(0.439 0 0);
   --chart-1: oklch(0.488 0.243 264.376);
@@ -30,8 +30,8 @@
   --chart-4: oklch(0.627 0.265 303.9);
   --chart-5: oklch(0.645 0.246 16.439);
   --radius: 0.625rem;
-  --sidebar: oklch(27.70% 0.006 271.21);
-  --sidebar-foreground: oklch(89.14% 0.000 0);
+  --sidebar: oklch(27.7% 0.006 271.21);
+  --sidebar-foreground: oklch(89.14% 0 0);
   --sidebar-primary: oklch(0.488 0.243 264.376);
   --sidebar-primary-foreground: oklch(0.985 0 0);
   --sidebar-accent: oklch(0.269 0 0);
@@ -88,12 +88,6 @@
   }
 }
 
-.titlebar {
-  height: 50px;
-  background: var(--color-background);
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.draggable {
   app-region: drag;
 }
