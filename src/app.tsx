@@ -7,9 +7,9 @@ const rootElement = document.getElementById("root");
 if (rootElement) {
   ReactDOM.createRoot(rootElement).render(
     <React.StrictMode>
-      <div className="bg-amber-500">
-        <h1>💖 Hello from React!</h1>
-        <Button>Click me!</Button>
+      <div>
+        {/* <h1>💖 Hello from React!</h1>
+        <Button>Click me!</Button> */}
       </div>
     </React.StrictMode>
   );

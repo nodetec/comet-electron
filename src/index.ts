@@ -18,8 +18,14 @@ const createWindow = (): void => {
     width: 1200,
     minWidth: 900,
     minHeight: 250,
-    titleBarStyle : "hiddenInset",
-    darkTheme: true,
+    trafficLightPosition: { x: 18, y: 18 },
+    titleBarStyle: "hidden",
+    ...(process.platform !== "darwin" ? { titleBarOverlay: true } : {}),
+    titleBarOverlay: {
+      color: "#2f3241",
+      symbolColor: "#74b1be",
+      height: 60,
+    },
 
     webPreferences: {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
