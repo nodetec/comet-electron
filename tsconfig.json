@@ -21,6 +21,7 @@
   "include": [
     "src/**/*",
     ".eslintrc.cjs",
+    "prettier.config.cjs",
     "forge.config.ts",
     "webpack.main.config.ts",
     "webpack.renderer.config.ts"
