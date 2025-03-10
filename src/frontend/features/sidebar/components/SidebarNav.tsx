@@ -21,19 +21,12 @@ export function SidebarNav() {
     //   )}
     >
       <div className="flex flex-col gap-y-1 px-3">
-        <Accordion
-          className="my-0 py-0"
-          type="single"
-          collapsible
-          defaultValue="item-1"
-        >
-          <AccordionItem value="item-1">
-            <AccordionTrigger className="pt-0 pb-1.5">
-              <div className="flex items-center">
-                <div className="ml-1 text-xs">Notes</div>
-              </div>
+        <Accordion type="single" collapsible defaultValue="notes">
+          <AccordionItem value="notes">
+            <AccordionTrigger className="ml-1 text-xs flex items-center pt-0 pb-1.5">
+              Notes
             </AccordionTrigger>
-            <AccordionContent className="flex flex-col gap-0.5 pb-0 pl-1">
+            <AccordionContent className="flex flex-col gap-0.5 pb-0">
               <AllNotesBtn />
               <TrashNotesBtn />
             </AccordionContent>

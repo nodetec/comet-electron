@@ -23,11 +23,6 @@ const createWindow = (): void => {
     titleBarStyle: "hidden",
     backgroundColor: "#1D1E20",
     ...(process.platform !== "darwin" ? { titleBarOverlay: true } : {}),
-    titleBarOverlay: {
-      color: "#2f3241",
-      symbolColor: "#74b1be",
-      height: 60,
-    },
 
     webPreferences: {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,

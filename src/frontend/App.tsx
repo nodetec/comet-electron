@@ -1,5 +1,5 @@
 import { Bar, Container, Section } from "@column-resizer/react";
-import useAppFocus from "~/hooks/useAppFocus";
+import useAppFocus from "./hooks/useAppFocus";
 
 import { Editor } from "./features/editor";
 import { NotesHeader, NotesSearch } from "./features/notes";

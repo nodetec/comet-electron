@@ -1,3 +1,4 @@
+import { SidebarButton } from "~/components/ui/SidebarButton";
 import { useAppState } from "~/store";
 import { FileText } from "lucide-react";
 
@@ -13,21 +14,16 @@ export function AllNotesBtn() {
     setAppFocus({ panel: "sidebar", isFocused: true });
   }
 
-  const isDataActive =
+  const isFocused =
     appFocus?.panel === "sidebar" && appFocus.isFocused && feedType === "all";
 
-  // TODO: consistent buttons for sidebar
   return (
-    <button
+    <SidebarButton
+      isFocused={isFocused}
       onClick={handleAllNotesClick}
-      data-active={isDataActive}
-      className={`text-secondary-foreground ml-1 flex items-center rounded-md px-2 py-1 text-sm select-none ${feedType === "all" && "bg-accent"} cursor-default data-[active=true]:bg-blue-500/50`}
-    >
-      <FileText
-        data-active={isDataActive}
-        className="data-[active=true]:text-secondary-foreground h-4 w-4 text-blue-400/90"
-      />
-      <span className="ml-2.5">All Notes</span>
-    </button>
+      isActive={feedType === "all"}
+      icon={<FileText data-focused={isFocused} />}
+      label="All Notes"
+    />
   );
 }
