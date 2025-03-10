@@ -119,7 +119,7 @@ export function Editor() {
   return (
     // <LexicalComposer key={activeNote?.ID} initialConfig={initialConfig}>
     <LexicalComposer key={0} initialConfig={initialConfig}>
-      <div className="bg-background flex w-full justify-center border-b py-2">
+      <div className="bg-background flex w-full justify-center border-b py-2 draggable">
         <ToolbarPlugin />
       </div>
       <RichTextPlugin
