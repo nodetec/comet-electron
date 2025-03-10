@@ -54,6 +54,8 @@ function BrokenImage(): JSX.Element {
   return (
     <img
       // TODO: Add broken image src
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
       src={null}
       style={{
         height: 200,
