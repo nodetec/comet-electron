@@ -44,7 +44,7 @@ export default function ResizableLayout() {
           <div className="bg-border h-full w-[1px]" />
           <div className="bg-background h-full w-[5px]" />
         </Bar>
-        <Section minSize={400}>
+        <Section minSize={500}>
           <div className="flex h-screen flex-col select-none">
             <Editor />
           </div>
