@@ -1,22 +1,28 @@
 import { Bar, Container, Section } from "@column-resizer/react";
 import useAppFocus from "~/hooks/useAppFocus";
 
+import { Editor } from "./features/editor";
+import { NotesHeader, NotesSearch } from "./features/notes";
+import { NewNotebookBtn, SidebarHeader, SidebarNav } from "./features/sidebar";
+
 export default function ResizableLayout() {
   useAppFocus();
-
-  console.log('hi')
 
   return (
     <div className="flex h-dvh w-dvw flex-col items-center justify-center">
       <Container className="h-full w-full">
         <Section
-          className="select-none bg-sidebar"
+          className="bg-sidebar flex flex-col justify-between select-none"
           disableResponsive
           defaultSize={200}
           minSize={200}
-          maxSize={400}
+          maxSize={300}
         >
-          {/* <Sidebar /> */}
+          <div>
+            <SidebarHeader />
+            <SidebarNav />
+          </div>
+          <NewNotebookBtn />
         </Section>
         <Bar className="flex cursor-col-resize items-center" size={10}>
           <div className="bg-sidebar h-full w-[5px]" />
@@ -26,11 +32,11 @@ export default function ResizableLayout() {
         <Section
           className="flex h-full flex-col select-none"
           disableResponsive
-          defaultSize={400}
+          defaultSize={280}
           minSize={250}
         >
-          {/* <NotesHeader /> */}
-          {/* <SearchBox /> */}
+          <NotesHeader />
+          <NotesSearch />
           {/* <NoteList /> */}
         </Section>
         <Bar className="flex cursor-col-resize items-center" size={10}>
@@ -40,7 +46,7 @@ export default function ResizableLayout() {
         </Bar>
         <Section minSize={400}>
           <div className="flex h-screen flex-col select-none">
-            {/* <Editor /> */}
+            <Editor />
           </div>
         </Section>
       </Container>
