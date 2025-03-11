@@ -1,8 +1,9 @@
-import type { Configuration } from "webpack";
 import path from "path";
 
-import { rules } from "./webpack.rules";
+import type { Configuration } from "webpack";
+
 import { plugins } from "./webpack.plugins";
+import { rules } from "./webpack.rules";
 
 // Filter out any existing CSS rules
 const filteredRules = rules.filter(
@@ -13,7 +14,7 @@ const filteredRules = rules.filter(
       rule.test &&
       // eslint-disable-next-line @typescript-eslint/no-base-to-string
       String(rule.test).includes("\\.css")
-    )
+    ),
 );
 
 // Add our CSS rule
@@ -35,6 +36,11 @@ export const rendererConfig: Configuration = {
     extensions: [".js", ".ts", ".jsx", ".tsx", ".css"],
     alias: {
       "~": path.resolve(__dirname, "src", "frontend"),
+      "&": path.resolve(__dirname, "src", "backend"),
+      $: path.resolve(__dirname, "src"),
+    },
+    fallback: {
+      path: require.resolve("path-browserify"),
     },
   },
 };

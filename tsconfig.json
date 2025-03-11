@@ -3,6 +3,7 @@
     "target": "ES6",
     "allowJs": true,
     "jsx": "react-jsx",
+    "types": ["./types.d.ts"],
     "module": "commonjs",
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -16,11 +17,13 @@
     "paths": {
       "*": ["node_modules/*"],
       "~/*": ["./src/frontend/*"],
-      "~/&": ["./src/backend/*"]
+      "&/*": ["./src/backend/*"],
+      "$/*": ["./src/*"]
     }
   },
   "include": [
     "src/**/*",
+    "typings.d.ts",
     ".eslintrc.cjs",
     "prettier.config.cjs",
     "forge.config.ts",
