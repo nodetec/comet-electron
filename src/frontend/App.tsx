@@ -1,9 +1,12 @@
+import React from "react";
+
 import { Bar, Container, Section } from "@column-resizer/react";
-import useAppFocus from "./hooks/useAppFocus";
 
 import { Editor } from "./features/editor";
 import { NotesHeader, NotesSearch } from "./features/notes";
 import { NewNotebookBtn, SidebarHeader, SidebarNav } from "./features/sidebar";
+import useAppFocus from "./hooks/useAppFocus";
+import { NoteList } from "./features/notes/components/NoteList";
 
 export default function ResizableLayout() {
   useAppFocus();
@@ -37,7 +40,7 @@ export default function ResizableLayout() {
         >
           <NotesHeader />
           <NotesSearch />
-          {/* <NoteList /> */}
+          <NoteList />
         </Section>
         <Bar className="flex cursor-col-resize items-center" size={10}>
           <div className="bg-background h-full w-[5px]" />
