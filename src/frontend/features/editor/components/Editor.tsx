@@ -26,6 +26,7 @@ import { $setSelection, type EditorState, type LexicalEditor } from "lexical";
 import AutoLinkPlugin from "../lexical/autolink/AutoLinkPlugin";
 import { MarkdownCodeBlockShortcutPlugin } from "../lexical/codeblock/MarkdownCodeBlockShortcutPlugin";
 import { CustomHashtagPlugin } from "../lexical/customHashtag/CustomHashtagPlugin";
+import { MarkdownImageShortcutPlugin } from "../lexical/markdownImage/MarkdownImageShortcut";
 import { MarkdownImageNode } from "../lexical/markdownImage/nodes/MarkdownImageNode";
 import { MARKDOWN_IMAGE_TRANSFORMER } from "../lexical/markdownImage/transformers/MarkdownImageTransformer";
 import { OnChangeDebouncePlugin } from "../lexical/onChangeDebounce/OnChangeDebouncePlugin";
@@ -119,24 +120,25 @@ export function Editor() {
   return (
     // <LexicalComposer key={activeNote?.ID} initialConfig={initialConfig}>
     <LexicalComposer key={0} initialConfig={initialConfig}>
-      <div className="bg-background flex w-full justify-center border-b py-2 draggable">
+      <div className="bg-background draggable flex w-full justify-center border-b py-2">
         <ToolbarPlugin />
       </div>
       <RichTextPlugin
         contentEditable={
           <ScrollArea className="flex flex-1 flex-col" type="scroll">
-            <ContentEditable className="min-h-screen flex-auto flex-col px-16 pt-8 pb-[50%] caret-sky-500/90 select-text focus-visible:outline-none" />
+            <ContentEditable className="min-h-full flex-auto flex-col px-16 pt-8 pb-[50%] caret-sky-500/90 select-text focus-visible:outline-none" />
           </ScrollArea>
         }
         ErrorBoundary={LexicalErrorBoundary}
       />
 
       {/* {!activeNote.TrashedAt && ( */}
-        <>
-          <OnChangeDebouncePlugin onChange={onChange} debounceTime={500} />
-          <OnFocusPlugin onFocus={onFocus} />
-        </>
+      <>
+        <OnChangeDebouncePlugin onChange={onChange} debounceTime={500} />
+        <OnFocusPlugin onFocus={onFocus} />
+      </>
       {/* )} */}
+      <MarkdownImageShortcutPlugin />
       <MarkdownShortcutPlugin transformers={COMBINED_TRANSFORMERS} />
       <TabKeyPlugin tabSize={2} useSpaces={true} />
       <ListPlugin />
