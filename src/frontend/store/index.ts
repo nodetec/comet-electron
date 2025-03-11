@@ -2,6 +2,12 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 interface State {
+  activeNoteId: string | undefined;
+  setActiveNoteId: (activeNoteId: string | undefined) => void;
+
+  activeNotebookId: string | undefined;
+  setActiveNotebookId: (activeNotebookId: string | undefined) => void;
+
   feedType: "all" | "notebook" | "trash";
   setFeedType: (feedType: "all" | "notebook" | "trash") => void;
 
@@ -18,6 +24,12 @@ interface State {
 export const useAppState = create<State>()(
   persist(
     (set) => ({
+      activeNoteId: undefined,
+      setActiveNoteId: (activeNoteId) => set({ activeNoteId }),
+
+      activeNotebookId: undefined,
+      setActiveNotebookId: (activeNotebookId) => set({ activeNotebookId }),
+
       feedType: "all",
       setFeedType: (feedType) => set({ feedType }),
 
