@@ -1,0 +1,1 @@
+export { parseContent } from "./parseContent";
