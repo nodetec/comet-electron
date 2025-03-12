@@ -5,8 +5,8 @@ import "./DefaultTheme.css";
 const DefaultTheme: EditorThemeClasses = {
   autocomplete: "absolute bg-white border rounded-md shadow-lg p-2",
   blockCursor: "bg-black",
-  characterLimit: "text-gray-500 text-xs",
-  code: "font-mono textCode bg-muted text-zinc-300 p-4 block overflow-x-auto relative",
+  // characterLimit: "text-gray-500 text-xs",
+  code: "font-mono textCode text-sm bg-accent/50 text-accent-foreground p-4 block overflow-x-auto relative",
   embedBlock: {
     base: "border rounded-md p-2",
     focus: "border-blue-500 shadow",
@@ -67,7 +67,7 @@ const DefaultTheme: EditorThemeClasses = {
     // base: "",
     bold: "font-bold",
     capitalize: "capitalize",
-    code: "font-mono text-sm bg-muted p-1 rounded",
+    code: "font-mono bg-accent/50 p-1 rounded",
     italic: "italic",
     lowercase: "lowercase",
     strikethrough: "line-through",

@@ -9,7 +9,7 @@ import path from "path";
 
 import { type InsertNote, type Note } from "$/types/Note";
 import dayjs from "dayjs";
-import { app, IpcMainInvokeEvent } from "electron";
+import { app, type IpcMainInvokeEvent } from "electron";
 import { v4 as uuidv4 } from "uuid";
 
 import { getDb, initDb } from "./db";
@@ -41,18 +41,13 @@ export async function createNote(
     archivedAt: undefined,
   };
 
-  console.log("createNote", note);
-
   const response = await db.put<Note>(note);
   return response.id;
 }
 
-async function getNote(key: string) {
-  return await db.get(key);
-}
-
-async function getAllNotesDocs() {
-  return await db.allDocs({ include_docs: true });
+export async function getNote(_: IpcMainInvokeEvent, id: string) {
+  const response = await db.get<Note>(id);
+  return response;
 }
 
 export async function getNoteFeed(
@@ -62,14 +57,16 @@ export async function getNoteFeed(
   sortField: "title" | "createdAt" | "contentUpdatedAt" = "contentUpdatedAt",
   sortOrder: "asc" | "desc" = "desc",
 ) {
-  const response = db.find({
+  const response = await db.find({
     selector: {},
     sort: [{ [sortField]: sortOrder }],
     skip: page * limit,
     limit,
   });
 
-  return response;
+  const notes = response.docs as Note[];
+
+  return notes;
 }
 
 async function deleteNote(key: string) {

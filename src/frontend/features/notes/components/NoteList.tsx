@@ -3,7 +3,7 @@ import { assignRef } from "~/lib/utils";
 import { useInView } from "react-intersection-observer";
 
 import useNotes from "../hooks/useNotes";
-// import { NoteCard } from "./NoteCard";
+import { NoteCard } from "./NoteCard";
 
 export const NoteList = () => {
   const { status, data, isFetchingNextPage, fetchNextPage, hasNextPage } =
@@ -25,12 +25,12 @@ export const NoteList = () => {
     return <div>Error fetching notes</div>;
   }
 
-//   const flattenedNotes = data.pages.flatMap((page) => page.data);
+  const flattenedNotes = data.pages.flatMap((page) => page.data);
 
   return (
     <ScrollArea type="scroll" className="h-screen">
       <div className="flex flex-col items-center px-3">
-        {/* {flattenedNotes.map((note, index) => (
+        {flattenedNotes.map((note, index) => (
           <div
             className="mx-3 flex w-full flex-col items-center"
             key={index}
@@ -47,7 +47,7 @@ export const NoteList = () => {
               length={flattenedNotes.length}
             />
           </div>
-        ))} */}
+        ))}
       </div>
     </ScrollArea>
   );

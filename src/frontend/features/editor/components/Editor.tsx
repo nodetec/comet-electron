@@ -44,10 +44,10 @@ function onError(error: Error) {
 
 export function Editor() {
   // const saveNote = useSaveNote();
-  // const { data: activeNote } = useActiveNote();
   const feedType = useAppState((state) => state.feedType);
-
   const setAppFocus = useAppState((state) => state.setAppFocus);
+  const activeNoteId = useAppState((state) => state.activeNoteId);
+  // const note = useNote(activeNoteId);
 
   const COMBINED_TRANSFORMERS = [
     MARKDOWN_IMAGE_TRANSFORMER,
@@ -118,8 +118,7 @@ export function Editor() {
   };
 
   return (
-    // <LexicalComposer key={activeNote?.ID} initialConfig={initialConfig}>
-    <LexicalComposer key={0} initialConfig={initialConfig}>
+    <LexicalComposer key={activeNoteId} initialConfig={initialConfig}>
       <div className="bg-background draggable flex w-full justify-center border-b py-2">
         <ToolbarPlugin />
       </div>

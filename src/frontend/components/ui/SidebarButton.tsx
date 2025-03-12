@@ -23,7 +23,7 @@ export function SidebarButton({
       data-focused={isFocused}
       className={cn(
         "text-secondary-foreground flex w-full items-center rounded-md px-3 py-1 text-sm select-none",
-        isActive && "bg-accent",
+        isActive && "bg-accent/80",
         "cursor-default data-[focused=true]:bg-blue-500/50",
       )}
     >

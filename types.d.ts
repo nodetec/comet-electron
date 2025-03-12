@@ -1,4 +1,4 @@
-import { type InsertNote } from "$/types/Note";
+import { type InsertNote, type Note } from "$/types/Note";
 
 declare global {
   interface Window {
@@ -9,7 +9,7 @@ declare global {
         limit: number,
         sortField: "title" | "createdAt" | "contentUpdatedAt",
         sortOrder: "asc" | "desc",
-      ) => Promise<any>;
+      ) => Promise<Note[]>;
     };
   }
 }

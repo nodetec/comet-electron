@@ -2,19 +2,15 @@ import { useMemo } from "react";
 
 import { Button } from "~/components/ui/button";
 import { useAppState } from "~/store";
-import { PenBoxIcon } from "lucide-react";
+import { ChevronDown, PenBoxIcon } from "lucide-react";
 
 import { useCreateNote } from "../hooks/useCreateNote";
-
-// import { useCreateNote } from "../hooks/useCreateNote";
 
 export function NotesHeader() {
   const feedType = useAppState((state) => state.feedType);
   const activeNotebookId = useAppState((state) => state.activeNotebookId);
   const createNote = useCreateNote();
-  // const activeNote = useAppState((state) => state.activeNote);
 
-  // TODO: just make this a map
   const title = useMemo(() => {
     if (feedType === "all") return "All Notes";
     // if (feedType === "notebook") return activeNotebook?.Name;
@@ -30,7 +26,7 @@ export function NotesHeader() {
         <h1 className="line-clamp-1 truncate font-semibold break-all text-ellipsis whitespace-break-spaces select-none">
           {title}
         </h1>
-        {/* <ChevronDown className="mr-4 mt-1 h-[1rem] w-[1rem] shrink-0 text-muted-foreground" /> */}
+        <ChevronDown className="text-muted-foreground mt-1 mr-4 h-[1rem] w-[1rem] shrink-0" />
       </div>
       <Button
         type="button"
