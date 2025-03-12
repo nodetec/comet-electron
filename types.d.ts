@@ -11,6 +11,7 @@ declare global {
         sortOrder: "asc" | "desc",
       ) => Promise<Note[]>;
       getNote: (id: string) => Promise<Note>;
+      saveNote: (update: Partial<Note>) => Promise<string>;
     };
   }
 }

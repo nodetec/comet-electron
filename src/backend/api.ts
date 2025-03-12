@@ -67,8 +67,17 @@ export async function getNoteFeed(
   return notes;
 }
 
+export async function saveNote(_: IpcMainInvokeEvent, update: Partial<Note>) {
+  const id = update._id;
+  if (!id) return;
+  const note = await db.get<Note>(id);
+  note.title = update.title ?? dayjs().format("YYYY-MM-DD");
+  note.content = update.content ?? "";
+  const response = await db.put(note);
+  return response.id;
+}
+
 async function deleteNote(key: string) {
-  const db = getDb();
   const note = await db.get<Note>(key);
   return await db.remove(note);
 }

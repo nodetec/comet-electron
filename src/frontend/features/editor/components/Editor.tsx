@@ -23,6 +23,7 @@ import { useAppState } from "~/store";
 import { $setSelection, type EditorState, type LexicalEditor } from "lexical";
 
 import { useNote } from "../hooks/useNote";
+import { useSaveNote } from "../hooks/useSaveNote";
 // import { useSaveNote } from "../hooks/useSaveNote";
 import AutoLinkPlugin from "../lexical/autolink/AutoLinkPlugin";
 import { MarkdownCodeBlockShortcutPlugin } from "../lexical/codeblock/MarkdownCodeBlockShortcutPlugin";
@@ -44,11 +45,12 @@ function onError(error: Error) {
 }
 
 export function Editor() {
-  // const saveNote = useSaveNote();
   const feedType = useAppState((state) => state.feedType);
   const setAppFocus = useAppState((state) => state.setAppFocus);
   const activeNoteId = useAppState((state) => state.activeNoteId);
   const note = useNote(activeNoteId);
+
+  const saveNote = useSaveNote();
 
   const COMBINED_TRANSFORMERS = [
     MARKDOWN_IMAGE_TRANSFORMER,
@@ -63,12 +65,12 @@ export function Editor() {
 
   function onChange(editorState: EditorState) {
     console.log(editorState.toJSON());
-    // saveNote.mutate({
-    //   note: activeNote,
-    //   editor: editorState,
-    //   transformers: COMBINED_TRANSFORMERS,
-    //   shouldInvalidate: true,
-    // });
+    saveNote.mutate({
+      note: note.data,
+      editor: editorState,
+      transformers: COMBINED_TRANSFORMERS,
+      shouldInvalidate: true,
+    });
   }
 
   function onFocus(_event: FocusEvent, _editor: LexicalEditor) {
@@ -85,8 +87,7 @@ export function Editor() {
 
   function getInitalContent() {
     $convertFromMarkdownString(
-      // activeNote?.Content ?? "",
-      "",
+      note.data?.content ?? "",
       COMBINED_TRANSFORMERS,
       undefined,
       true,
