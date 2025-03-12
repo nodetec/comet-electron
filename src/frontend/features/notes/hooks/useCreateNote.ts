@@ -1,13 +1,18 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-
-async function createNote(notebookId?: string) {
-  await window.api.createNote({
-    notebookId,
-  });
-}
+import { useAppState } from "~/store";
 
 export function useCreateNote() {
   const queryClient = useQueryClient();
+
+  const setActiveNoteId = useAppState((state) => state.setActiveNoteId);
+
+  async function createNote(notebookId?: string) {
+    const id = await window.api.createNote({
+      notebookId,
+    });
+
+    setActiveNoteId(id);
+  }
 
   return useMutation({
     mutationFn: createNote,

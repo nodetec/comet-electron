@@ -73,6 +73,8 @@ export async function saveNote(_: IpcMainInvokeEvent, update: Partial<Note>) {
   const note = await db.get<Note>(id);
   note.title = update.title ?? dayjs().format("YYYY-MM-DD");
   note.content = update.content ?? "";
+  note.updatedAt = new Date();
+  note.contentUpdatedAt = new Date();
   const response = await db.put(note);
   return response.id;
 }

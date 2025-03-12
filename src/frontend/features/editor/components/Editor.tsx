@@ -39,6 +39,7 @@ import { ToolbarPlugin } from "../lexical/toolbar/ToolbarPlugin";
 import { YouTubeNode } from "../lexical/youtube/YouTubeNode";
 import { YOUTUBE_TRANSFORMER } from "../lexical/youtube/YouTubeTransformer";
 import DefaultTheme from "../themes/DefaultTheme";
+import { DummyEditor } from "./DummyEditor";
 
 function onError(error: Error) {
   console.error(error);
@@ -58,7 +59,11 @@ export function Editor() {
     ...TRANSFORMERS,
   ];
 
-  if (!note.data && !note.isLoading && !activeNoteId) {
+  if (note.isLoading) {
+    return <DummyEditor />;
+  }
+
+  if (!note.data || !activeNoteId) {
     // TODO: show some nice art or something here
     return null;
   }
