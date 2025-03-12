@@ -5,7 +5,7 @@ PouchDB.plugin(PouchDBFind);
 
 let db: PouchDB.Database;
 
-export function initDb(dbPath: string) {
+export async function initDb(dbPath: string) {
   db = new PouchDB(dbPath, {
     revs_limit: 3,
     auto_compaction: true,
@@ -15,23 +15,20 @@ export function initDb(dbPath: string) {
     live: true,
   });
 
+  const createIndexResponse = await db.createIndex({
+    index: {
+      fields: ["type", "contentUpdatedAt", "trashedAt"],
+    },
+  });
+
+  console.log("createIndexResponse", createIndexResponse);
+
   return db;
 }
 
-export function getDb() {
-  if (!db) throw new Error("DB not initialized");
-  return db;
-}
+export const getDb = () => db;
 
 export const logDbInfo = async () => {
   const info = await db.info();
   console.log("db location", info);
-};
-
-export const setupIndexes = async () => {
-  await db.createIndex({
-    index: {
-      fields: ["contentUpdatedAt"],
-    },
-  });
 };

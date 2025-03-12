@@ -1,4 +1,3 @@
-import { useQueryClient } from "@tanstack/react-query";
 import { Separator } from "~/components/ui/separator";
 import {
   Tooltip,
@@ -18,10 +17,6 @@ type Props = {
 };
 
 export function NoteCard({ note, index, length }: Props) {
-  const queryClient = useQueryClient();
-
-  const feedType = useAppState((state) => state.feedType);
-
   const activeNoteId = useAppState((state) => state.activeNoteId);
   const setActiveNoteId = useAppState((state) => state.setActiveNoteId);
 
@@ -38,9 +33,8 @@ export function NoteCard({ note, index, length }: Props) {
 
   const isFocused = appFocus?.panel === "feed" && appFocus.isFocused && active;
 
-  const handleContextMenu = (event: React.MouseEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    console.log("Right Clicked");
+  const handleContextMenu = (_: React.MouseEvent<HTMLDivElement>) => {
+    window.api.noteCardContextMenu(note._id);
   };
 
   return (

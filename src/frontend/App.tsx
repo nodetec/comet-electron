@@ -4,12 +4,14 @@ import { Bar, Container, Section } from "@column-resizer/react";
 
 import { Editor } from "./features/editor";
 import { NotesHeader, NotesSearch } from "./features/notes";
+import { NoteList } from "./features/notes/components/NoteList";
 import { NewNotebookBtn, SidebarHeader, SidebarNav } from "./features/sidebar";
 import useAppFocus from "./hooks/useAppFocus";
-import { NoteList } from "./features/notes/components/NoteList";
+import { useEvents } from "./hooks/useEvents";
 
 export default function ResizableLayout() {
   useAppFocus();
+  useEvents();
 
   return (
     <div className="flex h-dvh w-dvw flex-col items-center justify-center">

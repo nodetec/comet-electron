@@ -19,11 +19,14 @@ const useNotes = () => {
     // const showTrashed = feedType === "trash";
     // TODO: put search order on notebook
 
+    const trashFeed = feedType === "trash";
+
     const notes = await window.api.getNoteFeed(
       offset,
       limit,
       "contentUpdatedAt",
       "desc",
+      trashFeed,
     );
 
     return {
@@ -44,8 +47,8 @@ const useNotes = () => {
       //   titleSortDirection,
     ],
     queryFn: fetchNotes,
-    gcTime: 0,
-    staleTime: 0,
+    // gcTime: 0,
+    // staleTime: 0,
     initialPageParam: 1,
     getNextPageParam: (lastPage, allPages, lastPageParam) => {
       //   if (lastPage.data.length === 0) {

@@ -1,7 +1,7 @@
 // See the Electron documentation for details on how to use preload scripts:
 // https://www.electronjs.org/docs/latest/tutorial/process-model#preload-scripts
 
-import { contextBridge, ipcRenderer } from "electron";
+import { contextBridge, ipcRenderer, type IpcRendererEvent } from "electron";
 
 import { type InsertNote, type Note } from "./types/Note";
 
@@ -15,6 +15,7 @@ contextBridge.exposeInMainWorld("api", {
     limit: number,
     sortField: "title" | "createdAt" | "contentUpdatedAt" = "contentUpdatedAt",
     sortOrder: "asc" | "desc" = "desc",
+    trashFeed = false,
   ) =>
     ipcRenderer.invoke(
       "getNoteFeed",
@@ -22,8 +23,25 @@ contextBridge.exposeInMainWorld("api", {
       limit,
       sortField,
       sortOrder,
+      trashFeed,
     ) as Promise<Note[]>,
   getNote: (id: string) => ipcRenderer.invoke("getNote", id) as Promise<Note>,
   saveNote: (update: Partial<Note>) =>
     ipcRenderer.invoke("saveNote", update) as Promise<string>,
+
+  // context menus
+  noteCardContextMenu: (noteId: string) =>
+    ipcRenderer.send("noteCardContextMenu", noteId),
+
+  // listeners
+  onNoteMovedToTrash: (
+    handler: (event: IpcRendererEvent, noteId: string) => void,
+  ) => {
+    ipcRenderer.on("noteMovedToTrash", handler);
+  },
+  removeNoteMovedToTrashListener: (
+    handler: (event: IpcRendererEvent, noteId: string) => void,
+  ) => {
+    ipcRenderer.removeListener("noteDeleted", handler);
+  },
 } satisfies Window["api"]);
