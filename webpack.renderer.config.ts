@@ -39,8 +39,5 @@ export const rendererConfig: Configuration = {
       "&": path.resolve(__dirname, "src", "backend"),
       $: path.resolve(__dirname, "src"),
     },
-    fallback: {
-      path: require.resolve("path-browserify"),
-    },
   },
 };

@@ -5,13 +5,23 @@
 // https://pouchdb.com/2015/02/28/efficiently-managing-ui-state-in-pouchdb.html
 // https://pouchdb.com/2014/05/01/secondary-indexes-have-landed-in-pouchdb.html
 
+import path from "path";
+
 import { type InsertNote, type Note } from "$/types/Note";
 import dayjs from "dayjs";
+import { app, IpcMainInvokeEvent } from "electron";
 import { v4 as uuidv4 } from "uuid";
 
-import { db } from "./db";
+import { getDb, initDb } from "./db";
 
-export async function createNote(insertNote: InsertNote) {
+// const db = getDb();
+
+const db = initDb(path.join(app.getPath("appData"), "comet", "comet-alpha"));
+
+export async function createNote(
+  _: IpcMainInvokeEvent,
+  insertNote: InsertNote,
+): Promise<string> {
   const note: Note = {
     _id: `note_${uuidv4()}`,
     _rev: undefined,
@@ -46,6 +56,7 @@ async function getAllNotesDocs() {
 }
 
 export async function getNoteFeed(
+  _: IpcMainInvokeEvent,
   page: number,
   limit: number,
   sortField: "title" | "createdAt" | "contentUpdatedAt" = "contentUpdatedAt",
@@ -62,6 +73,7 @@ export async function getNoteFeed(
 }
 
 async function deleteNote(key: string) {
+  const db = getDb();
   const note = await db.get<Note>(key);
   return await db.remove(note);
 }

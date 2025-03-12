@@ -8,7 +8,7 @@ const useAppFocus = () => {
 
   // Function to execute when the web app loses focus
   const handleBlur = useCallback(() => {
-    console.log("The web app has lost focus.");
+    // console.log("The web app has lost focus.");
     setAppFocus({
       panel: appFocus?.panel,
       isFocused: false,
@@ -17,7 +17,7 @@ const useAppFocus = () => {
 
   // Function to execute when the web app regains focus
   const handleFocus = useCallback(() => {
-    console.log("The web app has regained focus.");
+    // console.log("The web app has regained focus.");
     setAppFocus({
       panel: appFocus?.panel,
       isFocused: true,

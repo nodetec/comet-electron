@@ -19,12 +19,14 @@ const useNotes = () => {
 
     // const showTrashed = feedType === "trash";
 
-    const notes = window.api.getNoteFeed(
+    const notes = await window.api.getNoteFeed(
       pageParam,
       limit,
       "contentUpdatedAt",
       "desc",
     );
+
+    console.log("notes", notes);
 
     return {
     //   data: notes || [],
