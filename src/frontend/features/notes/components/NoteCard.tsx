@@ -33,15 +33,6 @@ export function NoteCard({ note, index, length }: Props) {
   async function handleSetActiveNote(event: React.MouseEvent<HTMLDivElement>) {
     event.preventDefault();
     setActiveNoteId(note._id);
-    // if (note.Active) {
-    //   setActiveNote(note);
-    //   setAppFocus({ panel: "feed", isFocused: true });
-    //   return;
-    // }
-    // setActiveNote(note);
-    // await AppService.SetActiveNote(note.ID);
-    // await queryClient.invalidateQueries({ queryKey: ["activeNote"] });
-    // await queryClient.invalidateQueries({ queryKey: ["notes"] });
     setAppFocus({ panel: "feed", isFocused: true });
   }
 

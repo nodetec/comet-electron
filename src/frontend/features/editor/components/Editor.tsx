@@ -58,7 +58,7 @@ export function Editor() {
     ...TRANSFORMERS,
   ];
 
-  if (!note.data) {
+  if (!note.data && !note.isLoading && !activeNoteId) {
     // TODO: show some nice art or something here
     return null;
   }
@@ -134,7 +134,7 @@ export function Editor() {
         ErrorBoundary={LexicalErrorBoundary}
       />
 
-      {!note.data.trashedAt && (
+      {!note.data?.trashedAt && (
         <>
           <OnChangeDebouncePlugin onChange={onChange} debounceTime={500} />
           <OnFocusPlugin onFocus={onFocus} />
