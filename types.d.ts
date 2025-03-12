@@ -10,6 +10,7 @@ declare global {
         sortField: "title" | "createdAt" | "contentUpdatedAt",
         sortOrder: "asc" | "desc",
       ) => Promise<Note[]>;
+      getNote: (id: string) => Promise<Note>;
     };
   }
 }

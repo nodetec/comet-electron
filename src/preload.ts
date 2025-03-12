@@ -3,7 +3,7 @@
 
 import { contextBridge, ipcRenderer } from "electron";
 
-import { type InsertNote } from "./types/Note";
+import { type Note, type InsertNote } from "./types/Note";
 
 // Expose protected methods that allow the renderer process to use
 // the ipcRenderer without exposing the entire object
@@ -22,5 +22,6 @@ contextBridge.exposeInMainWorld("api", {
       limit,
       sortField,
       sortOrder,
-    ) as Promise<any>,
+    ) as Promise<Note[]>,
+  getNote: (id: string) => ipcRenderer.invoke("getNote", id) as Promise<Note>,
 } satisfies Window["api"]);

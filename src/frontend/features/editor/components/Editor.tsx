@@ -22,6 +22,7 @@ import { ScrollArea } from "~/components/ui/scroll-area";
 import { useAppState } from "~/store";
 import { $setSelection, type EditorState, type LexicalEditor } from "lexical";
 
+import { useNote } from "../hooks/useNote";
 // import { useSaveNote } from "../hooks/useSaveNote";
 import AutoLinkPlugin from "../lexical/autolink/AutoLinkPlugin";
 import { MarkdownCodeBlockShortcutPlugin } from "../lexical/codeblock/MarkdownCodeBlockShortcutPlugin";
@@ -47,7 +48,7 @@ export function Editor() {
   const feedType = useAppState((state) => state.feedType);
   const setAppFocus = useAppState((state) => state.setAppFocus);
   const activeNoteId = useAppState((state) => state.activeNoteId);
-  // const note = useNote(activeNoteId);
+  const note = useNote(activeNoteId);
 
   const COMBINED_TRANSFORMERS = [
     MARKDOWN_IMAGE_TRANSFORMER,
@@ -55,9 +56,10 @@ export function Editor() {
     ...TRANSFORMERS,
   ];
 
-  // if (!activeNote) {
-  //   return null;
-  // }
+  if (!note.data) {
+    // TODO: show some nice art or something here
+    return null;
+  }
 
   function onChange(editorState: EditorState) {
     console.log(editorState.toJSON());
@@ -131,12 +133,12 @@ export function Editor() {
         ErrorBoundary={LexicalErrorBoundary}
       />
 
-      {/* {!activeNote.TrashedAt && ( */}
-      <>
-        <OnChangeDebouncePlugin onChange={onChange} debounceTime={500} />
-        <OnFocusPlugin onFocus={onFocus} />
-      </>
-      {/* )} */}
+      {!note.data.trashedAt && (
+        <>
+          <OnChangeDebouncePlugin onChange={onChange} debounceTime={500} />
+          <OnFocusPlugin onFocus={onFocus} />
+        </>
+      )}
       <MarkdownImageShortcutPlugin />
       <MarkdownShortcutPlugin transformers={COMBINED_TRANSFORMERS} />
       <TabKeyPlugin tabSize={2} useSpaces={true} />

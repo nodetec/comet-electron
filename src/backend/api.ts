@@ -14,8 +14,6 @@ import { v4 as uuidv4 } from "uuid";
 
 import { getDb, initDb } from "./db";
 
-// const db = getDb();
-
 const db = initDb(path.join(app.getPath("appData"), "comet", "comet-alpha"));
 
 export async function createNote(

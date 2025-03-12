@@ -10,7 +10,6 @@ const useNotes = () => {
   const feedType = useAppState((state) => state.feedType);
 
   async function fetchNotes({ pageParam = 1 }) {
-    console.log("fetchNotes", pageParam);
     const limit = 10;
     const offset = (pageParam - 1) * limit;
 
@@ -27,12 +26,10 @@ const useNotes = () => {
       "desc",
     );
 
-    console.log("notes", notes);
-
     return {
-        data: notes || [],
-        nextPage: pageParam + 1,
-        nextCursor: notes.length === limit ? pageParam + 1 : undefined,
+      data: notes || [],
+      nextPage: pageParam + 1,
+      nextCursor: notes.length === limit ? pageParam + 1 : undefined,
     };
   }
 

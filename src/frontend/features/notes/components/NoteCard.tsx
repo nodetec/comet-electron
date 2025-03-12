@@ -43,7 +43,6 @@ export function NoteCard({ note, index, length }: Props) {
     // await queryClient.invalidateQueries({ queryKey: ["activeNote"] });
     // await queryClient.invalidateQueries({ queryKey: ["notes"] });
     setAppFocus({ panel: "feed", isFocused: true });
-    console.log("Clicked");
   }
 
   const isFocused = appFocus?.panel === "feed" && appFocus.isFocused && active;
