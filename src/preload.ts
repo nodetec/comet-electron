@@ -11,7 +11,7 @@ contextBridge.exposeInMainWorld("api", {
   createNote: (note: InsertNote) =>
     ipcRenderer.invoke("createNote", note) as Promise<string>,
   getNoteFeed: (
-    page: number,
+    offset: number,
     limit: number,
     sortField: "title" | "createdAt" | "contentUpdatedAt" = "contentUpdatedAt",
     sortOrder: "asc" | "desc" = "desc",
@@ -19,7 +19,7 @@ contextBridge.exposeInMainWorld("api", {
   ) =>
     ipcRenderer.invoke(
       "getNoteFeed",
-      page,
+      offset,
       limit,
       sortField,
       sortOrder,

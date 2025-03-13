@@ -49,7 +49,7 @@ const createWindow = (): void => {
     // center the main window
     mainWindow.center();
     mainWindow.setSize(1200, 600);
-    mainWindow.setMinimumSize(900, 250);
+    mainWindow.setMinimumSize(980, 350);
   });
 
   // Open the DevTools.

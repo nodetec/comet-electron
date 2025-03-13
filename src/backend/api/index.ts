@@ -48,25 +48,26 @@ export async function getNote(_: IpcMainInvokeEvent, id: string) {
 
 export async function getNoteFeed(
   _: IpcMainInvokeEvent,
-  page: number,
+  offset: number,
   limit: number,
   sortField: "title" | "createdAt" | "contentUpdatedAt" = "contentUpdatedAt",
   sortOrder: "asc" | "desc" = "desc",
   trashFeed = false,
 ) {
   const db = getDb();
+  console.log("offset", offset);
   const response = await db.find({
     selector: {
       type: "note",
-      ...(trashFeed
-        ? { trashedAt: { $exists: true } } // Get only trashed notes
-        : { trashedAt: { $exists: false } }), // Get only non-trashed notes
+      trashedAt: { $exists: trashFeed }, // Get only non-trashed notes
       contentUpdatedAt: { $exists: true },
     },
     sort: [{ [sortField]: sortOrder }],
-    skip: page * limit,
+    skip: offset,
     limit,
   });
+
+  console.log("response", response);
 
   const notes = response.docs as Note[];
 

@@ -12,6 +12,7 @@ export const NoteList = () => {
   const { ref: lastNoteRef } = useInView({
     onChange: (inView) => {
       if (inView && !isFetchingNextPage && hasNextPage) {
+        console.log("fetching next page");
         void fetchNextPage();
       }
     },

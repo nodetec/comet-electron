@@ -21,6 +21,8 @@ const useNotes = () => {
 
     const trashFeed = feedType === "trash";
 
+    console.log("offset", offset);
+
     const notes = await window.api.getNoteFeed(
       offset,
       limit,
@@ -28,6 +30,8 @@ const useNotes = () => {
       "desc",
       trashFeed,
     );
+
+    console.log("notes", notes);
 
     return {
       data: notes || [],

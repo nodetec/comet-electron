@@ -6,7 +6,7 @@ declare global {
     api: {
       createNote: (note: InsertNote) => Promise<string>;
       getNoteFeed: (
-        page: number,
+        offset: number,
         limit: number,
         sortField: "title" | "createdAt" | "contentUpdatedAt",
         sortOrder: "asc" | "desc",

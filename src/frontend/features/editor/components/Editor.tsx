@@ -83,12 +83,12 @@ export function Editor() {
     setAppFocus({ panel: "editor", isFocused: true });
   }
 
-  // function handleClick(event: React.MouseEvent<HTMLDivElement>) {
-  //   event.preventDefault();
-  //   if (feedType === "trash") {
-  //     setAppFocus({ panel: "editor", isFocused: true });
-  //   }
-  // }
+  function handleClick(event: React.MouseEvent<HTMLDivElement>) {
+    event.preventDefault();
+    if (feedType === "trash") {
+      setAppFocus({ panel: "editor", isFocused: true });
+    }
+  }
 
   function getInitalContent() {
     $convertFromMarkdownString(
@@ -133,7 +133,10 @@ export function Editor() {
       <RichTextPlugin
         contentEditable={
           <ScrollArea className="flex flex-1 flex-col" type="scroll">
-            <ContentEditable className="min-h-full flex-auto flex-col px-16 pt-8 pb-[50%] caret-sky-500/90 select-text focus-visible:outline-none" />
+            <ContentEditable
+              onClick={handleClick}
+              className="min-h-full flex-auto flex-col px-16 pt-8 pb-[50%] caret-sky-500/90 select-text focus-visible:outline-none"
+            />
           </ScrollArea>
         }
         ErrorBoundary={LexicalErrorBoundary}
