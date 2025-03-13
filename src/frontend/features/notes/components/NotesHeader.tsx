@@ -9,13 +9,15 @@ import { useCreateNote } from "../hooks/useCreateNote";
 export function NotesHeader() {
   const feedType = useAppState((state) => state.feedType);
   const activeNotebookId = useAppState((state) => state.activeNotebookId);
+  const activeNotebookName = useAppState((state) => state.activeNotebookName);
   const createNote = useCreateNote();
 
   const title = useMemo(() => {
+    console.log("feedType", feedType);
     if (feedType === "all") return "All Notes";
-    // if (feedType === "notebook") return activeNotebook?.Name;
+    if (feedType === "notebook") return activeNotebookName;
     if (feedType === "trash") return "Trash";
-  }, [feedType]);
+  }, [activeNotebookName, feedType]);
 
   return (
     <div className="draggable flex justify-between px-3 pt-2">

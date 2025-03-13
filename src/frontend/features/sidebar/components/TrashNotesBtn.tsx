@@ -1,6 +1,6 @@
 import { SidebarButton } from "~/components/ui/SidebarButton";
 import { useAppState } from "~/store";
-import { Trash2Icon } from "lucide-react";
+import { TrashIcon } from "lucide-react";
 
 export function TrashNotesBtn() {
   const feedType = useAppState((state) => state.feedType);
@@ -26,7 +26,7 @@ export function TrashNotesBtn() {
       isFocused={isFocused}
       onClick={handleClick}
       isActive={feedType === "trash"}
-      icon={<Trash2Icon data-focused={isFocused} />}
+      icon={<TrashIcon data-focused={isFocused} />}
       label="Trash"
     />
   );

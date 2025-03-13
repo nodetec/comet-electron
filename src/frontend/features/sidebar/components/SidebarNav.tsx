@@ -23,7 +23,7 @@ export function SidebarNav() {
       <div className="flex flex-col gap-y-1 px-3">
         <Accordion type="single" collapsible defaultValue="notes">
           <AccordionItem value="notes">
-            <AccordionTrigger className="ml-1 text-xs flex items-center pt-0 pb-1.5">
+            <AccordionTrigger className="ml-1 flex items-center pt-0 pb-1.5 text-xs">
               Notes
             </AccordionTrigger>
             <AccordionContent className="flex flex-col gap-0.5 pb-0">

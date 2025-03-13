@@ -4,6 +4,7 @@
 import { contextBridge, ipcRenderer, type IpcRendererEvent } from "electron";
 
 import { type InsertNote, type Note } from "./types/Note";
+import { type Notebook } from "./types/Notebook";
 
 // Expose protected methods that allow the renderer process to use
 // the ipcRenderer without exposing the entire object
@@ -15,6 +16,7 @@ contextBridge.exposeInMainWorld("api", {
     limit: number,
     sortField: "title" | "createdAt" | "contentUpdatedAt" = "contentUpdatedAt",
     sortOrder: "asc" | "desc" = "desc",
+    notebookId,
     trashFeed = false,
   ) =>
     ipcRenderer.invoke(
@@ -23,11 +25,20 @@ contextBridge.exposeInMainWorld("api", {
       limit,
       sortField,
       sortOrder,
+      notebookId,
       trashFeed,
     ) as Promise<Note[]>,
   getNote: (id: string) => ipcRenderer.invoke("getNote", id) as Promise<Note>,
   saveNote: (update: Partial<Note>) =>
     ipcRenderer.invoke("saveNote", update) as Promise<string>,
+
+  // notebooks
+  createNotebook: (name: string) =>
+    ipcRenderer.invoke("createNotebook", name) as Promise<string>,
+  getNotebook: (id: string) =>
+    ipcRenderer.invoke("getNotebook", id) as Promise<Notebook>,
+  getNotebooks: (showHidden: boolean) =>
+    ipcRenderer.invoke("getNotebooks", showHidden) as Promise<Notebook[]>,
 
   // context menus
   noteCardContextMenu: (noteId: string) =>

@@ -7,4 +7,7 @@ export function setupHandlers(): void {
   ipcMain.handle("getNoteFeed", api.getNoteFeed);
   ipcMain.handle("getNote", api.getNote);
   ipcMain.handle("saveNote", api.saveNote);
+  ipcMain.handle("createNotebook", api.createNotebook);
+  ipcMain.handle("getNotebook", api.getNotebook);
+  ipcMain.handle("getNotebooks", api.getNotebooks);
 }

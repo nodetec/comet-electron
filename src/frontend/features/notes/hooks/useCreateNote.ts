@@ -11,18 +11,19 @@ export function useCreateNote() {
       notebookId,
     });
 
+    void queryClient.invalidateQueries({
+      queryKey: ["notes"],
+    });
+
     setActiveNoteId(id);
   }
 
   return useMutation({
     mutationFn: createNote,
     onSuccess: (_) => {
-      void queryClient.invalidateQueries({
-        queryKey: ["notes"],
-      });
-      void queryClient.invalidateQueries({
-        queryKey: ["activeNote"],
-      });
+      //   void queryClient.invalidateQueries({
+      //     queryKey: ["notes"],
+      //   });
     },
   });
 }

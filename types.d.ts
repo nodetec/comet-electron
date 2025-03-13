@@ -1,4 +1,5 @@
 import { type InsertNote, type Note } from "$/types/Note";
+import { type Notebook } from "$/types/Notebook";
 import { type IpcRendererEvent } from "electron";
 
 declare global {
@@ -10,10 +11,14 @@ declare global {
         limit: number,
         sortField: "title" | "createdAt" | "contentUpdatedAt",
         sortOrder: "asc" | "desc",
+        notebookId?: string,
         trashFeed?: boolean,
       ) => Promise<Note[]>;
       getNote: (id: string) => Promise<Note>;
       saveNote: (update: Partial<Note>) => Promise<string>;
+      createNotebook: (name: string) => Promise<string>;
+      getNotebook: (id: string) => Promise<Notebook>;
+      getNotebooks: (showHidden: boolean) => Promise<Notebook[]>;
       // context menus
       noteCardContextMenu: (noteId: string) => void;
       onNoteMovedToTrash: (

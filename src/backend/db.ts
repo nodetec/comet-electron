@@ -17,7 +17,15 @@ export async function initDb(dbPath: string) {
 
   const createIndexResponse = await db.createIndex({
     index: {
-      fields: ["type", "contentUpdatedAt", "trashedAt"],
+      fields: [
+        "type",
+        "contentUpdatedAt",
+        "trashedAt",
+        "notebookId",
+        "hidden",
+        "name",
+        "pinnedAt",
+      ],
     },
   });
 

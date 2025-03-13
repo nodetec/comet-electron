@@ -19,11 +19,21 @@ const useNotes = () => {
     // TODO: put search order on notebook
     const trashFeed = feedType === "trash";
 
+    let notebookId: string | undefined;
+    if (feedType === "notebook") {
+      notebookId = activeNotebookId;
+    } else if (feedType === "all") {
+      notebookId = undefined;
+    }
+
+    console.log("notebookId", notebookId);
+
     const notes = await window.api.getNoteFeed(
       offset,
       limit,
       "contentUpdatedAt",
       "desc",
+      notebookId,
       trashFeed,
     );
 
@@ -45,13 +55,11 @@ const useNotes = () => {
       //   titleSortDirection,
     ],
     queryFn: fetchNotes,
-    // gcTime: 0,
-    // staleTime: 0,
     initialPageParam: 1,
     getNextPageParam: (lastPage, allPages, lastPageParam) => {
-      //   if (lastPage.data.length === 0) {
-      //     return undefined;
-      //   }
+      if (lastPage.data.length === 0) {
+        return undefined;
+      }
 
       return lastPageParam + 1;
     },

@@ -2,22 +2,6 @@ export type InsertNote = {
   notebookId?: string;
 };
 
-export type UpdateNote = {
-  _id: string;
-  _rev: string;
-  type: "note";
-  title: string;
-  content: string;
-  notebookId?: string;
-  publishedAt?: Date;
-  eventAddress?: string;
-  identifier?: string;
-  pinnedAt?: Date;
-  trashedAt?: Date;
-  archivedAt?: Date;
-  author?: string;
-};
-
 export type Note = {
   _id: string;
   _rev: string | undefined;

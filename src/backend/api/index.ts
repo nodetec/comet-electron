@@ -6,12 +6,14 @@
 // https://pouchdb.com/2014/05/01/secondary-indexes-have-landed-in-pouchdb.html
 
 import { type InsertNote, type Note } from "$/types/Note";
+import { type Notebook } from "$/types/Notebook";
 import dayjs from "dayjs";
 import { type IpcMainEvent, type IpcMainInvokeEvent } from "electron";
 import { v4 as uuidv4 } from "uuid";
 
 import { getDb } from "../db";
 
+// Notes
 export async function createNote(
   _: IpcMainInvokeEvent,
   insertNote: InsertNote,
@@ -23,7 +25,7 @@ export async function createNote(
     type: "note",
     title: dayjs().format("YYYY-MM-DD"),
     content: "",
-    notebookId: insertNote?.notebookId,
+    notebookId: insertNote?.notebookId ?? "all",
     createdAt: new Date(),
     updatedAt: new Date(),
     contentUpdatedAt: new Date(),
@@ -52,22 +54,27 @@ export async function getNoteFeed(
   limit: number,
   sortField: "title" | "createdAt" | "contentUpdatedAt" = "contentUpdatedAt",
   sortOrder: "asc" | "desc" = "desc",
+  notebookId?: string,
   trashFeed = false,
 ) {
   const db = getDb();
-  console.log("offset", offset);
+
+  const selector: PouchDB.Find.Selector = {
+    type: "note",
+    trashedAt: { $exists: trashFeed },
+    contentUpdatedAt: { $exists: true },
+  };
+
+  if (notebookId) {
+    selector.notebookId = notebookId;
+  }
+
   const response = await db.find({
-    selector: {
-      type: "note",
-      trashedAt: { $exists: trashFeed }, // Get only non-trashed notes
-      contentUpdatedAt: { $exists: true },
-    },
+    selector,
     sort: [{ [sortField]: sortOrder }],
     skip: offset,
     limit,
   });
-
-  console.log("response", response);
 
   const notes = response.docs as Note[];
 
@@ -105,15 +112,83 @@ export async function deleteNote(_: IpcMainEvent, id: string) {
   return await db.remove(note);
 }
 
-export async function restoreNote(
-  _: IpcMainEvent,
-  id: string,
-): Promise<string> {
+export async function restoreNote(_: IpcMainEvent, id: string) {
   const db = getDb();
   const note = await db.get<Note>(id);
   note.trashedAt = undefined;
   note.updatedAt = new Date();
   note.contentUpdatedAt = new Date();
   const response = await db.put(note);
+  return response.id;
+}
+
+// Notebooks
+export async function createNotebook(_: IpcMainInvokeEvent, name: string) {
+  const db = getDb();
+
+  // look up the notebook by name
+  const findResponse = await db.find({
+    selector: {
+      type: "notebook",
+      name,
+    },
+  });
+
+  // console.log("findResponse", findResponse);
+
+  if (findResponse.docs.length > 0) {
+    throw new Error("Notebook with that name already exists");
+  }
+
+  const notebook = {
+    _id: `notebook_${uuidv4()}`,
+    type: "notebook",
+    name,
+    hidden: false,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  };
+
+  // console.log("notebook", notebook);
+
+  const response = await db.put(notebook);
+  return response.id;
+}
+
+export async function getNotebook(_: IpcMainInvokeEvent, id: string) {
+  const db = getDb();
+  const response = await db.get<Notebook>(id);
+  return response;
+}
+
+export async function getNotebooks(_: IpcMainInvokeEvent, showHidden = false) {
+  const db = getDb();
+  const response = await db.find({
+    selector: {
+      type: "notebook",
+      hidden: { $exists: showHidden },
+    },
+  });
+
+  // console.log("RESPONSE", response);
+
+  const notebooks = response.docs as Notebook[];
+
+  // console.log("NOTEBOOKS", notebooks);
+
+  return notebooks;
+}
+
+export async function updateNotebookName(
+  _: IpcMainInvokeEvent,
+  update: Partial<Notebook>,
+) {
+  const db = getDb();
+  const id = update._id;
+  if (!id) return;
+  const notebook = await db.get<Notebook>(id);
+  notebook.name = update.name ?? "";
+  notebook.updatedAt = new Date();
+  const response = await db.put(notebook);
   return response.id;
 }

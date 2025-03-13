@@ -1,6 +1,6 @@
 import { SidebarButton } from "~/components/ui/SidebarButton";
 import { useAppState } from "~/store";
-import { FileText } from "lucide-react";
+import { StickyNoteIcon } from "lucide-react";
 
 export function AllNotesBtn() {
   const feedType = useAppState((state) => state.feedType);
@@ -9,8 +9,12 @@ export function AllNotesBtn() {
   const appFocus = useAppState((state) => state.appFocus);
   const setAppFocus = useAppState((state) => state.setAppFocus);
 
+  // const notebookId = useAppState((state) => state.activeNotebookId);
+  const setNotebookId = useAppState((state) => state.setActiveNotebookId);
+
   async function handleAllNotesClick() {
     setFeedType("all");
+    setNotebookId("all");
     setAppFocus({ panel: "sidebar", isFocused: true });
   }
 
@@ -22,7 +26,7 @@ export function AllNotesBtn() {
       isFocused={isFocused}
       onClick={handleAllNotesClick}
       isActive={feedType === "all"}
-      icon={<FileText data-focused={isFocused} />}
+      icon={<StickyNoteIcon data-focused={isFocused} />}
       label="All Notes"
     />
   );

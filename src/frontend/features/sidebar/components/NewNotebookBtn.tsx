@@ -21,7 +21,7 @@ export function NewNotebookBtn() {
   const [name, setName] = useState("");
   const [isOpen, setIsOpen] = useState(false);
 
-//   const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
 
   const handleCreate = async () => {
     console.log({ name });
@@ -32,16 +32,15 @@ export function NewNotebookBtn() {
 
     const trimmedName = name.trim();
 
-    // const notebookExists = await AppService.CheckNotebookExists(trimmedName);
-
-    // if (notebookExists) {
-    // //   toast.error("Notebook already exists");
-    //   return;
-    // }
-
-    // await AppService.CreateNotebook(trimmedName);
-    // await queryClient.invalidateQueries({ queryKey: ["notebooks"] });
-    // toast.success("Notebook created successfully");
+    try {
+      await window.api.createNotebook(trimmedName);
+      await queryClient.invalidateQueries({ queryKey: ["notebooks"] });
+      setIsOpen(false);
+      setName("");
+    } catch (error) {
+      console.error(error);
+      toast.error("Notebook already exists");
+    }
     setIsOpen(false);
     setName(""); // Clear the input field
   };
