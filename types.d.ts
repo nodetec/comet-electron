@@ -20,7 +20,7 @@ declare global {
       getNotebook: (id: string) => Promise<Notebook>;
       getNotebooks: (showHidden: boolean) => Promise<Notebook[]>;
       // context menus
-      noteCardContextMenu: (noteId: string) => void;
+      noteCardContextMenu: (note: Note, notebooks: Notebook[]) => void;
       notebookContextMenu: (notebookId: string) => void;
       onNoteMovedToTrash: (
         handler: (event: IpcRendererEvent, noteId: string) => void,
@@ -39,6 +39,12 @@ declare global {
         handler: (event: IpcRendererEvent, noteId: string) => void,
       ) => void;
       removeNoteRestoredListener: (
+        handler: (event: IpcRendererEvent, noteId: string) => void,
+      ) => void;
+      onNoteMovedToNotebook: (
+        handler: (event: IpcRendererEvent, noteId: string) => void,
+      ) => void;
+      removeNoteMovedToNotebookListener: (
         handler: (event: IpcRendererEvent, noteId: string) => void,
       ) => void;
       onNotebookHidden: (

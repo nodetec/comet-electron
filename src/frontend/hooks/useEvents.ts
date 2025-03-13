@@ -78,7 +78,7 @@ export const useEvents = () => {
     return () => {
       window.api.removeNotebookHiddenListener(notebookHiddenHandler);
     };
-  } , [queryClient]);
+  }, [queryClient]);
 
   useEffect(() => {
     const notebookDeletedHandler = (
@@ -93,6 +93,22 @@ export const useEvents = () => {
 
     return () => {
       window.api.removeNotebookDeletedListener(notebookDeletedHandler);
+    };
+  }, [queryClient]);
+
+  useEffect(() => {
+    const noteMovedToNotebookHandler = (
+      event: Electron.IpcRendererEvent,
+      noteId: string,
+    ) => {
+      console.log("Note moved to notebook:", noteId);
+      void queryClient.invalidateQueries({ queryKey: ["notes"] });
+    };
+
+    window.api.onNoteMovedToNotebook(noteMovedToNotebookHandler);
+
+    return () => {
+      window.api.removeNoteMovedToNotebookListener(noteMovedToNotebookHandler);
     };
   }, [queryClient]);
 };

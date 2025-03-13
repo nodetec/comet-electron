@@ -18,8 +18,6 @@ if (require("electron-squirrel-startup")) {
   app.quit();
 }
 
-contextMenu();
-
 const createWindow = (): void => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
@@ -72,6 +70,8 @@ void app
     setupHandlers();
     setupContextMenus();
     createWindow();
+    // This overrides the default context menu which is annoying
+    // contextMenu();
 
     void logDbInfo();
   })

@@ -122,6 +122,20 @@ export async function restoreNote(_: IpcMainEvent, id: string) {
   return response.id;
 }
 
+export async function moveNoteToNotebook(
+  _: IpcMainInvokeEvent,
+  noteId: string,
+  notebookId: string,
+) {
+  const db = getDb();
+  const note = await db.get<Note>(noteId);
+  note.notebookId = notebookId;
+  note.updatedAt = new Date();
+  note.contentUpdatedAt = new Date();
+  const response = await db.put(note);
+  return response.id;
+}
+
 // Notebooks
 export async function createNotebook(_: IpcMainInvokeEvent, name: string) {
   const db = getDb();

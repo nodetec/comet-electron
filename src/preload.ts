@@ -41,8 +41,8 @@ contextBridge.exposeInMainWorld("api", {
     ipcRenderer.invoke("getNotebooks", showHidden) as Promise<Notebook[]>,
 
   // context menus
-  noteCardContextMenu: (noteId: string) =>
-    ipcRenderer.send("noteCardContextMenu", noteId),
+  noteCardContextMenu: (note: Note, notebooks: Notebook[]) =>
+    ipcRenderer.send("noteCardContextMenu", note, notebooks),
 
   // listeners
   onNoteMovedToTrash: (
@@ -76,6 +76,16 @@ contextBridge.exposeInMainWorld("api", {
     handler: (event: IpcRendererEvent, noteId: string) => void,
   ) => {
     ipcRenderer.removeListener("noteRestored", handler);
+  },
+  onNoteMovedToNotebook: (
+    handler: (event: IpcRendererEvent, noteId: string) => void,
+  ) => {
+    ipcRenderer.on("noteMovedToNotebook", handler);
+  },
+  removeNoteMovedToNotebookListener: (
+    handler: (event: IpcRendererEvent, noteId: string) => void,
+  ) => {
+    ipcRenderer.removeListener("noteMovedToNotebook", handler);
   },
   notebookContextMenu: (notebookId: string) =>
     ipcRenderer.send("notebookContextMenu", notebookId),

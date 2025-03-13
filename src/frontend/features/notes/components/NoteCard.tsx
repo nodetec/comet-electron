@@ -35,9 +35,11 @@ export function NoteCard({ note, index, length }: Props) {
 
   const isFocused = appFocus?.panel === "feed" && appFocus.isFocused && active;
 
-  const handleContextMenu = (_: React.MouseEvent<HTMLDivElement>) => {
-    if (feedType === "all") {
-      window.api.noteCardContextMenu(note._id);
+  const handleContextMenu = async (_: React.MouseEvent<HTMLDivElement>) => {
+    if (feedType === "all" || feedType === "notebook") {
+      const notebooks = await window.api.getNotebooks(true);
+      console.log("notebooks test", notebooks);
+      window.api.noteCardContextMenu(note, notebooks);
     }
     if (feedType === "trash") {
       window.api.trashNoteCardContextMenu(note._id);
