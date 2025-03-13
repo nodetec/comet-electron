@@ -91,12 +91,29 @@ export async function moveNoteToTrash(_: IpcMainEvent, id: string) {
   const db = getDb();
   const note = await db.get<Note>(id);
   note.trashedAt = new Date();
+  note.updatedAt = new Date();
   const response = await db.put(note);
   return response.id;
 }
 
-async function deleteNote(key: string) {
+export async function deleteNote(_: IpcMainEvent, id: string) {
   const db = getDb();
-  const note = await db.get<Note>(key);
+  const note = await db.get<Note>(id);
+  note.title = "";
+  note.content = "";
+  note.author = "";
   return await db.remove(note);
+}
+
+export async function restoreNote(
+  _: IpcMainEvent,
+  id: string,
+): Promise<string> {
+  const db = getDb();
+  const note = await db.get<Note>(id);
+  note.trashedAt = undefined;
+  note.updatedAt = new Date();
+  note.contentUpdatedAt = new Date();
+  const response = await db.put(note);
+  return response.id;
 }

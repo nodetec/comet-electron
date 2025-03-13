@@ -22,6 +22,19 @@ declare global {
       removeNoteMovedToTrashListener: (
         handler: (event: IpcRendererEvent, noteId: string) => void,
       ) => void;
+      trashNoteCardContextMenu: (noteId: string) => void;
+      onNoteDeleted: (
+        handler: (event: IpcRendererEvent, noteId: string) => void,
+      ) => void;
+      removeNoteDeletedListener: (
+        handler: (event: IpcRendererEvent, noteId: string) => void,
+      ) => void;
+      onNoteRestored: (
+        handler: (event: IpcRendererEvent, noteId: string) => void,
+      ) => void;
+      removeNoteRestoredListener: (
+        handler: (event: IpcRendererEvent, noteId: string) => void,
+      ) => void;
     };
   }
 }

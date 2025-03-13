@@ -2,7 +2,7 @@ import path from "path";
 
 import { initDb, logDbInfo } from "&/db";
 import { setupHandlers } from "&/handlers";
-import { setupNoteCardContextMenu } from "&/menus";
+import { setupContextMenus } from "&/menus";
 import { app, BrowserWindow } from "electron";
 import contextMenu from "electron-context-menu";
 
@@ -70,7 +70,7 @@ void app
   .then(async () => {
     await initDb(path.join(app.getPath("appData"), "comet", "comet-alpha"));
     setupHandlers();
-    setupNoteCardContextMenu();
+    setupContextMenus();
     createWindow();
 
     void logDbInfo();

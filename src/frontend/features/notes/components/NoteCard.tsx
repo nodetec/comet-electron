@@ -23,6 +23,8 @@ export function NoteCard({ note, index, length }: Props) {
   const appFocus = useAppState((state) => state.appFocus);
   const setAppFocus = useAppState((state) => state.setAppFocus);
 
+  const feedType = useAppState((state) => state.feedType);
+
   const active = activeNoteId === note._id;
 
   async function handleSetActiveNote(event: React.MouseEvent<HTMLDivElement>) {
@@ -34,7 +36,12 @@ export function NoteCard({ note, index, length }: Props) {
   const isFocused = appFocus?.panel === "feed" && appFocus.isFocused && active;
 
   const handleContextMenu = (_: React.MouseEvent<HTMLDivElement>) => {
-    window.api.noteCardContextMenu(note._id);
+    if (feedType === "all") {
+      window.api.noteCardContextMenu(note._id);
+    }
+    if (feedType === "trash") {
+      window.api.trashNoteCardContextMenu(note._id);
+    }
   };
 
   return (

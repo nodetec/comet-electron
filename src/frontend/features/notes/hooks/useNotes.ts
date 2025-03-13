@@ -16,12 +16,8 @@ const useNotes = () => {
     // const orderDirection =
     //   orderBy === "title" ? titleSortDirection : timeSortDirection;
 
-    // const showTrashed = feedType === "trash";
     // TODO: put search order on notebook
-
     const trashFeed = feedType === "trash";
-
-    console.log("offset", offset);
 
     const notes = await window.api.getNoteFeed(
       offset,
@@ -30,8 +26,6 @@ const useNotes = () => {
       "desc",
       trashFeed,
     );
-
-    console.log("notes", notes);
 
     return {
       data: notes || [],

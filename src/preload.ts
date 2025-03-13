@@ -44,4 +44,26 @@ contextBridge.exposeInMainWorld("api", {
   ) => {
     ipcRenderer.removeListener("noteDeleted", handler);
   },
+  trashNoteCardContextMenu: (noteId: string) =>
+    ipcRenderer.send("trashNoteCardContextMenu", noteId),
+  onNoteDeleted: (
+    handler: (event: IpcRendererEvent, noteId: string) => void,
+  ) => {
+    ipcRenderer.on("noteDeleted", handler);
+  },
+  removeNoteDeletedListener: (
+    handler: (event: IpcRendererEvent, noteId: string) => void,
+  ) => {
+    ipcRenderer.removeListener("noteDeleted", handler);
+  },
+  onNoteRestored: (
+    handler: (event: IpcRendererEvent, noteId: string) => void,
+  ) => {
+    ipcRenderer.on("noteRestored", handler);
+  },
+  removeNoteRestoredListener: (
+    handler: (event: IpcRendererEvent, noteId: string) => void,
+  ) => {
+    ipcRenderer.removeListener("noteRestored", handler);
+  },
 } satisfies Window["api"]);
