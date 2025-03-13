@@ -27,6 +27,10 @@ export function NotebookBtn({ notebook }: NotebookBtnProps) {
     setAppFocus({ panel: "sidebar", isFocused: true });
   }
 
+  const handleContextMenu = (_: React.MouseEvent<HTMLDivElement>) => {
+    window.api.notebookContextMenu(notebook._id);
+  };
+
   const isFocused =
     appFocus?.panel === "sidebar" &&
     appFocus.isFocused &&
@@ -35,6 +39,7 @@ export function NotebookBtn({ notebook }: NotebookBtnProps) {
 
   return (
     <SidebarButton
+      onContextMenu={handleContextMenu}
       isFocused={isFocused}
       onClick={handleAllNotesClick}
       isActive={feedType === "notebook" && notebook._id === activeNotebookId}

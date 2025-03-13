@@ -4,6 +4,9 @@ import { cn } from "~/lib/utils";
 
 interface SidebarButtonProps {
   onClick: () => void;
+  onContextMenu?: (
+    event: React.MouseEvent<HTMLDivElement>,
+  ) => void | Promise<void>;
   isFocused: boolean;
   isActive: boolean;
   icon: React.ReactElement<React.SVGProps<SVGSVGElement>>;
@@ -12,6 +15,7 @@ interface SidebarButtonProps {
 
 export function SidebarButton({
   onClick,
+  onContextMenu,
   isFocused,
   isActive,
   icon,
@@ -20,6 +24,7 @@ export function SidebarButton({
   return (
     <div
       onClick={onClick}
+      onContextMenu={onContextMenu}
       data-focused={isFocused}
       className={cn(
         "text-secondary-foreground flex w-full items-center rounded-md px-3 py-1 text-sm select-none",

@@ -63,4 +63,36 @@ export const useEvents = () => {
       window.api.removeNoteRestoredListener(noteRestoredHandler);
     };
   }, [queryClient]);
+
+  useEffect(() => {
+    const notebookHiddenHandler = (
+      event: Electron.IpcRendererEvent,
+      notebookId: string,
+    ) => {
+      console.log("Notebook hidden:", notebookId);
+      void queryClient.invalidateQueries({ queryKey: ["notebooks"] });
+    };
+
+    window.api.onNotebookHidden(notebookHiddenHandler);
+
+    return () => {
+      window.api.removeNotebookHiddenListener(notebookHiddenHandler);
+    };
+  } , [queryClient]);
+
+  useEffect(() => {
+    const notebookDeletedHandler = (
+      event: Electron.IpcRendererEvent,
+      notebookId: string,
+    ) => {
+      console.log("Notebook deleted:", notebookId);
+      void queryClient.invalidateQueries({ queryKey: ["notebooks"] });
+    };
+
+    window.api.onNotebookDeleted(notebookDeletedHandler);
+
+    return () => {
+      window.api.removeNotebookDeletedListener(notebookDeletedHandler);
+    };
+  }, [queryClient]);
 };

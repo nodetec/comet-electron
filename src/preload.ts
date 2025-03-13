@@ -77,4 +77,16 @@ contextBridge.exposeInMainWorld("api", {
   ) => {
     ipcRenderer.removeListener("noteRestored", handler);
   },
+  notebookContextMenu: (notebookId: string) =>
+    ipcRenderer.send("notebookContextMenu", notebookId),
+  onNotebookHidden: (handler: (e: IpcRendererEvent, id: string) => void) =>
+    ipcRenderer.on("notebookHidden", handler),
+  removeNotebookHiddenListener: (
+    handler: (e: IpcRendererEvent, id: string) => void,
+  ) => ipcRenderer.removeListener("notebookHidden", handler),
+  onNotebookDeleted: (handler: (e: IpcRendererEvent, id: string) => void) =>
+    ipcRenderer.on("notebookDeleted", handler),
+  removeNotebookDeletedListener: (
+    handler: (e: IpcRendererEvent, id: string) => void,
+  ) => ipcRenderer.removeListener("notebookDeleted", handler),
 } satisfies Window["api"]);

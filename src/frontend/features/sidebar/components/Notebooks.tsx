@@ -9,7 +9,7 @@ import { useNotebooks } from "~/hooks/useNotebooks";
 import { NotebookBtn } from "./NotebookBtn";
 
 export function Notebooks() {
-  const notebooks = useNotebooks(true);
+  const notebooks = useNotebooks(false);
 
   if (notebooks.status === "pending") {
     return undefined;

@@ -7,7 +7,7 @@ export function setupNoteCardContextMenu() {
 
     const template = [
       {
-        label: "Move To Trash",
+        label: "Trash",
         click: async () => {
           await moveNoteToTrash(event, noteId);
           event.sender.send("noteMovedToTrash", noteId);

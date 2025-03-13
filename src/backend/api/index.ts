@@ -134,8 +134,6 @@ export async function createNotebook(_: IpcMainInvokeEvent, name: string) {
     },
   });
 
-  // console.log("findResponse", findResponse);
-
   if (findResponse.docs.length > 0) {
     throw new Error("Notebook with that name already exists");
   }
@@ -149,8 +147,6 @@ export async function createNotebook(_: IpcMainInvokeEvent, name: string) {
     updatedAt: new Date(),
   };
 
-  // console.log("notebook", notebook);
-
   const response = await db.put(notebook);
   return response.id;
 }
@@ -163,18 +159,22 @@ export async function getNotebook(_: IpcMainInvokeEvent, id: string) {
 
 export async function getNotebooks(_: IpcMainInvokeEvent, showHidden = false) {
   const db = getDb();
+
+  const selector: PouchDB.Find.Selector = {
+    type: "notebook",
+  };
+
+  if (!showHidden) {
+    selector.hidden = false;
+  }
+
+  console.log("selector", selector);
+
   const response = await db.find({
-    selector: {
-      type: "notebook",
-      hidden: { $exists: showHidden },
-    },
+    selector,
   });
 
-  // console.log("RESPONSE", response);
-
   const notebooks = response.docs as Notebook[];
-
-  // console.log("NOTEBOOKS", notebooks);
 
   return notebooks;
 }
@@ -191,4 +191,29 @@ export async function updateNotebookName(
   notebook.updatedAt = new Date();
   const response = await db.put(notebook);
   return response.id;
+}
+
+export async function hideNotebook(_: IpcMainInvokeEvent, id: string) {
+  const db = getDb();
+  const notebook = await db.get<Notebook>(id);
+  notebook.hidden = true;
+  notebook.updatedAt = new Date();
+  const response = await db.put(notebook);
+  return response.id;
+}
+
+export async function unhideNotebook(_: IpcMainInvokeEvent, id: string) {
+  const db = getDb();
+  const notebook = await db.get<Notebook>(id);
+  notebook.hidden = false;
+  notebook.updatedAt = new Date();
+  const response = await db.put(notebook);
+  return response.id;
+}
+
+export async function deleteNotebook(_: IpcMainInvokeEvent, id: string) {
+  const db = getDb();
+  const notebook = await db.get<Notebook>(id);
+  notebook.name = "";
+  return await db.remove(notebook);
 }
